@@ -1,4 +1,5 @@
 import 'package:ejemplo/persona.dart';
+import 'package:ejemplo/textoTitulo.dart';
 import 'package:flutter/material.dart';
 
 class Listado extends StatefulWidget {
@@ -24,17 +25,26 @@ class _Listado extends State<Listado> {
     return Scaffold(
         backgroundColor: Colors.deepOrange[200],
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: TextButton(
-          onPressed: atras,
-          child: const Text('< Atrás'),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.all(30),
+          child: TextButton(
+            onPressed: atras,
+            child: const Text('< Atrás'),
+          ),
         ),
-        body: ListView.builder(
-          itemCount: personas.length,
-          itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(personas[index].nombre),
-            subtitle: Text(personas[index].edad.toString() + ' años'),
-          );
-        }),);
+        body: Column(
+          children: [
+            TextoTitulo('Personas'),
+            ListView.builder(
+                itemCount: personas.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(personas[index].nombre),
+                    subtitle: Text('${personas[index].edad} años'),
+                  );
+                },
+                shrinkWrap: true)
+          ],
+        ));
   }
 }
