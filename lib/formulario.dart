@@ -1,4 +1,4 @@
-
+import 'package:ejemplo/listado.dart';
 import 'package:ejemplo/persona.dart';
 import 'package:ejemplo/textoTitulo.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,8 @@ class _Formulario extends State<Formulario> {
   Persona persona = Persona('', 20);
 
   botonPulsado() {
-    print('Botón pulsado');
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => Listado()));
   }
 
   edadCambiada(double edad) {
