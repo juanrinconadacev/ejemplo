@@ -1,6 +1,7 @@
 import 'package:ejemplo/persona.dart';
 import 'package:ejemplo/textoTitulo.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Listado extends StatefulWidget {
   const Listado({super.key});
@@ -10,8 +11,23 @@ class Listado extends StatefulWidget {
 }
 
 class _Listado extends State<Listado> {
+  int _resultado = -1;
+
   atras() {
     Navigator.pop(context);
+  }
+
+  Future<void> getSentidoVida() async {
+    Uri uri = Uri.parse('https://superapi.netlify.app/api/meaningoflife');
+    final response = await http.get(uri);
+    _resultado = int.parse(response.body);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSentidoVida();
   }
 
   @override
@@ -35,6 +51,7 @@ class _Listado extends State<Listado> {
         body: Column(
           children: [
             TextoTitulo('Personas'),
+            if(_resultado != -1) Text('El sentido de la vida es $_resultado'),
             ListView.builder(
                 itemCount: personas.length,
                 itemBuilder: (context, index) {
