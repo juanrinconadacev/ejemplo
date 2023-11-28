@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ejemplo/persona.dart';
 import 'package:ejemplo/textoTitulo.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class Listado extends StatefulWidget {
 
 class _Listado extends State<Listado> {
   int _resultado = -1;
+  List<Persona> _personas = [];
 
   atras() {
     Navigator.pop(context);
@@ -24,19 +27,25 @@ class _Listado extends State<Listado> {
     setState(() {});
   }
 
+  Future<void> getUsuarios() async {
+    Uri uri = Uri.parse('https://superapi.netlify.app/api/users');
+    final response = await http.get(uri);
+    List<dynamic> users = json.decode(response.body);
+    for (var user in users) {
+      _personas.add(Persona(user, user.length));
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     getSentidoVida();
+    getUsuarios();
   }
 
   @override
   Widget build(BuildContext context) {
-    var personas = [
-      Persona("Pepe", 25),
-      Persona("Roberto", 50),
-      Persona("Javiera", 80)
-    ];
 
     return Scaffold(
         backgroundColor: Colors.deepOrange[200],
@@ -53,11 +62,11 @@ class _Listado extends State<Listado> {
             TextoTitulo('Personas'),
             if(_resultado != -1) Text('El sentido de la vida es $_resultado'),
             ListView.builder(
-                itemCount: personas.length,
+                itemCount: _personas.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(personas[index].nombre),
-                    subtitle: Text('${personas[index].edad} años'),
+                    title: Text(_personas[index].nombre),
+                    subtitle: Text('${_personas[index].edad} letras'),
                   );
                 },
                 shrinkWrap: true)
