@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:ejemplo/listado.dart';
 import 'package:ejemplo/persona.dart';
 import 'package:ejemplo/textoTitulo.dart';

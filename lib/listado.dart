@@ -61,15 +61,14 @@ class _Listado extends State<Listado> {
           children: [
             TextoTitulo('Personas'),
             if(_resultado != -1) Text('El sentido de la vida es $_resultado'),
-            ListView.builder(
+            Expanded(child: ListView.builder(
                 itemCount: _personas.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(_personas[index].nombre),
                     subtitle: Text('${_personas[index].edad} letras'),
                   );
-                },
-                shrinkWrap: true)
+                }))
           ],
         ));
   }
