@@ -5,24 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Formulario extends StatefulWidget {
-  const Formulario({super.key, required this.title});
+  const Formulario({super.key});
 
-  final String title;
 
   @override
   State<Formulario> createState() => _Formulario();
 }
 
 class _Formulario extends State<Formulario> {
-  Persona persona = Persona('', 20);
+  Persona persona = Persona('', 5);
 
   botonPulsado() {
     postRegistro();    
   }
 
-  edadCambiada(double edad) {
+  longitudCambiada(double longitud) {
     setState(() {
-      persona.edad = edad.round();
+      persona.longitud = longitud.round();
     });
   }
 
@@ -30,40 +29,51 @@ class _Formulario extends State<Formulario> {
     Uri uri = Uri.parse('https://superapi.netlify.app/api/register');
     final cabeceras = { 'Content-Type': 'application/json; charset=UTF-8' };
     final cuerpoJSON = persona.toJSON();
+    print('Enviando: $cuerpoJSON');
     final response = await http.post(uri, headers: cabeceras, body: cuerpoJSON);
     
     if (response.statusCode == 200) {
-      Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Listado()));
+      atras();
     }    
+  }
+
+  atras() {
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.deepOrange[200],
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(30),
+          child: TextButton(
+            onPressed: atras,
+            child: const Text('< Atrás'),
+          )),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
           child: Column(
             children: [
               TextoTitulo('Rellena los datos'),
               TextField(
-                decoration: InputDecoration(hintText: 'Escribe tu nombre...'),
+                decoration: const InputDecoration(hintText: 'Escribe tu nombre...'),
                 onChanged: (text) {
                   setState(() {
                     persona.nombre = text;
                   });
                 },
               ),
-              persona.edad > 75
-                  ? Text('Es usted viejo')
-                  : Text('Es usted joven'),
+              persona.longitud < 8
+                  ? const Text('Tu contraseña es débil')
+                  : const Text('Tu contraseña es fuerte'),
               Slider(
-                  value: persona.edad.toDouble(),
-                  max: 150,
-                  divisions: 150,
-                  label: persona.edad.toString(),
-                  onChanged: edadCambiada),
+                  value: persona.longitud.toDouble(),
+                  max: 20,
+                  divisions: 20,
+                  label: persona.longitud.toString(),
+                  onChanged: longitudCambiada),
               if (persona.nombre.isNotEmpty)
                 TextButton(onPressed: botonPulsado, child: Text('Aceptar')),
             ],

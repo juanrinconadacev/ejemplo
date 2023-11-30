@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ejemplo/formulario.dart';
 import 'package:ejemplo/persona.dart';
 import 'package:ejemplo/textoTitulo.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,9 @@ class _Listado extends State<Listado> {
   int _resultado = -1;
   List<Persona> _personas = [];
 
-  atras() {
-    Navigator.pop(context);
+  nuevoUsuario() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => Formulario()));
   }
 
   Future<void> getSentidoVida() async {
@@ -46,29 +48,23 @@ class _Listado extends State<Listado> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: Colors.deepOrange[200],
-        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.all(30),
-          child: TextButton(
-            onPressed: atras,
-            child: const Text('< Atrás'),
-          ),
-        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: nuevoUsuario, child: const Icon(Icons.add)),
         body: Column(
           children: [
             TextoTitulo('Personas'),
-            if(_resultado != -1) Text('El sentido de la vida es $_resultado'),
-            Expanded(child: ListView.builder(
-                itemCount: _personas.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_personas[index].nombre),
-                    subtitle: Text('${_personas[index].edad} letras'),
-                  );
-                }))
+            if (_resultado != -1) Text('El sentido de la vida es $_resultado'),
+            Expanded(
+                child: ListView.builder(
+                    itemCount: _personas.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(_personas[index].nombre),
+                        subtitle: Text('${_personas[index].longitud} letras'),
+                      );
+                    }))
           ],
         ));
   }
