@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:ejemplo/formulario.dart';
 import 'package:ejemplo/persona.dart';
-import 'package:ejemplo/textoTitulo.dart';
+import 'package:ejemplo/texto_titulo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,11 +15,11 @@ class Listado extends StatefulWidget {
 
 class _Listado extends State<Listado> {
   int _resultado = -1;
-  List<Persona> _personas = [];
+  final List<Persona> _personas = [];
 
   nuevoUsuario() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Formulario()));
+        .push(MaterialPageRoute(builder: (context) => const Formulario()));
   }
 
   Future<void> getSentidoVida() async {
@@ -54,7 +54,7 @@ class _Listado extends State<Listado> {
             onPressed: nuevoUsuario, child: const Icon(Icons.add)),
         body: Column(
           children: [
-            TextoTitulo('Personas'),
+            const TextoTitulo('Personas'),
             if (_resultado != -1) Text('El sentido de la vida es $_resultado'),
             Expanded(
                 child: ListView.builder(

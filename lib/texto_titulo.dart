@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextoTitulo extends StatelessWidget {
   final String _texto;
 
-  TextoTitulo(this._texto);
+  const TextoTitulo(this._texto, {super.key});
 
   @override
   Widget build(BuildContext context) {

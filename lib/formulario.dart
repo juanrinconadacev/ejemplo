@@ -1,6 +1,5 @@
-import 'package:ejemplo/listado.dart';
 import 'package:ejemplo/persona.dart';
-import 'package:ejemplo/textoTitulo.dart';
+import 'package:ejemplo/texto_titulo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -56,7 +55,7 @@ class _Formulario extends State<Formulario> {
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
           child: Column(
             children: [
-              TextoTitulo('Rellena los datos'),
+              const TextoTitulo('Rellena los datos'),
               TextField(
                 decoration: const InputDecoration(hintText: 'Escribe tu nombre...'),
                 onChanged: (text) {
@@ -75,7 +74,7 @@ class _Formulario extends State<Formulario> {
                   label: persona.longitud.toString(),
                   onChanged: longitudCambiada),
               if (persona.nombre.isNotEmpty)
-                TextButton(onPressed: botonPulsado, child: Text('Aceptar')),
+                TextButton(onPressed: botonPulsado, child: const Text('Aceptar')),
             ],
           ),
         ));
